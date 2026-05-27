@@ -1,9 +1,71 @@
+/* CONFIGURAÇÕES PARA TELA DE LOGIN */
 body {
-    background-color: #F0F1F2;
+    font-family: "Google Sans", sans-serif;
+    background-color: #ffffff;
+    margin: 0;
+    padding-top: 125px;
 }
 
 #login{
     padding: absolute;
     top:60px;
     left: 600px
+}
+
+/* CONFIGURAÇÕES PARA TELA HOME */
+
+#topbar {
+    background-color: #1D3273;
+    height: 100px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+}
+
+#titulo{
+    margin-top: 75px; 
+    text-align: center;
+    font-family: "Google Sans", sans-serif;
+    color: #1D3273;
+}
+
+.material-symbols-outlined {
+    font-size: 35px;
+    margin-top: 28px;
+    margin-left: 2%;
+    color: white;
+    cursor: pointer;
+}
+
+#logo {
+    position: absolute;
+    top: 28px;
+    left: 10%;
+    transform: translateX(-50%);
+    z-index: 10000; 
+}
+
+#logo img {
+    width: 145px;
+    height: auto;
+    display: block;
+}
+
+#perfil {
+    position: absolute;
+    top: -15px;
+    right: 75px;
+    z-index: 10000; 
+}
+
+#perfil img {
+    width: 135px;
+    height: auto;
+}
+
+table, th, tr{
+    border-collapse: collapse;
+    border: 1px black solid;
 }

@@ -1,5 +1,0 @@
-azul #1D3273
-azul2: #51608C
-branco: #F0F1F2
-amarelo: #F28705
-vermelho: #A6370F
