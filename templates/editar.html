@@ -3,67 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de almoxarifado</title>
-    <link rel="stylesheet" href="static/style.css">
+    <title> SENAI - Editar Almoxarifado</title>  
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link rel="icon" href="{{ url_for('static', filename='janela_icone.png') }}">
+    <link rel="stylesheet" href="static/style.css"> 
 </head>
+
 <body>
-
     <header>
-        <div>
-            <img src="static/logo_sistema.png" alt="Logo" class="foto-sistema"/>
+        <div id="topbar">
+    
+            <span class="material-symbols-outlined icon-menu">
+                menu
+            </span>
+    
+            <div id="logo">
+                <img src="static/logo_sistema.png" alt="Logo">
+            </div>
+    
+            <div class="menu-topbar">
+                <a href="/tabela" class="menu-item">HOME</a>
+                <a href="/editar" class="menu-item">EDITAR</a>
+            </div>
+    
+            <div id="perfil">
+                <img src="static/logo_perfil.png" alt="Perfil">
+            </div>
+    
         </div>
-        <div class="menu-topbar">
-            <a href="/tabela" class="menu-item">HOME</a>
-            <a href="/editar" class="menu-item">EDITAR</a>
-        </div>
-        <img src="static/logo_perfil.png" alt="Logo" class="foto-perfil"/>
     </header>
-
+    
     <main>
         <p class="secao-label">Nova movimentação</p>
-
+    
         <div style="display: flex; gap: 10px;">
-            <button class="btn btn-outline-primary" type="button">Entrada</button>
-            <button class="btn btn-outline-primary" type="button">Saída</button>
+            <button class="btn btn-outline-primary" type="button" id="btnEntrada">Entrada</button>
+            <button class="btn btn-outline-primary" type="button" id="btnSaida">Saída</button>
         </div>
-
+    
         <p class="secao-label" style="margin-top: 16px;">Item</p>
-        <input type="text" placeholder="Digite o item..."/>
-
+        <input type="text" id="item" placeholder="Digite o item..." />
+    
         <div style="display: flex; gap: 10px; margin-top: 16px;">
             <div style="flex: 1;">
                 <p class="secao-label">Quantidade</p>
-                <input type="number" placeholder="Ex: 5"/>
+                <input type="number" id="quantidade" placeholder="Ex: 5" />
             </div>
+    
             <div style="flex: 1;">
                 <p class="secao-label">Responsável</p>
-                <input type="text" placeholder="Digite o nome..."/>
+                <input type="text" id="responsavel" placeholder="Digite o nome..." />
             </div>
         </div>
-
+    
         <br/>
-
+    
         <div class="drag-area" id="dropArea">
-           <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
-          <p>Arraste e solte a imagem aqui </p>
-          <span>OU</span>
-          <button class="btn btn-outline-primary" type="button">Procurar Arquivo</button>
-          <input type="file" id="fileInput" hidden accept="image/*" onchange="handleFiles(this.files)">
+            <div class="icon">
+                <i class="fas fa-cloud-upload-alt"></i>
+            </div>
+    
+            <p>Arraste e solte a imagem aqui</p>
+            <span>OU</span>
+    
+            <button class="btn btn-outline-primary" type="button" id="btnUpload">
+                Procurar Arquivo
+            </button>
+    
+            <input type="file" id="fileInput" hidden accept="image/*">
         </div>
-
-<div id="preview"></div>
-
-
-        <button class="btn btn-primary" style="width: 100%; margin-top: 16px;" type="button">
+    
+        <div id="preview"></div>
+    
+        <button class="btn btn-primary" id="btnRegistrar" style="width: 100%; margin-top: 16px;">
             Registrar
         </button>
-
     </main>
-
-</body>
-</html>
+    
+    <script src="{{ url_for('static', filename='static.js') }}" defer></script>
+    
+    </body>
+    </html>
