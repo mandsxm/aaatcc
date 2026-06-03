@@ -1,8 +1,12 @@
 /* CONFIGURAÇÕES PARA TELA DE LOGIN */
 body {
     margin: 0;
-    background-color: #F0F1F2;
+    background-color:#F0F1F2;
     font-family: sans-serif;
+}
+
+#login-body{
+    background-color:#1D3273
 }
 
 #login-page{
@@ -42,10 +46,35 @@ body {
     margin: auto;
 }
 
+#login-card{
+    padding: 30px;
+    background-color:#F0F1F2;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
 #btn-entrar{
     width: 75%;
     display: block;
-    margin: 0 auto
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#btn-criarconta{
+    width: 75%;
+    display: block;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#btn-criar{
+    width: 75%;
+    display: block;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* CONFIGURAÇÕES PARA TELA HOME */

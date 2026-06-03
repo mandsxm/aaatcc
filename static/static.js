@@ -1,8 +1,27 @@
-const botao = document.getElementById("Entrar")
+document.addEventListener("DOMContentLoaded", () => {
 
-botao.addEventListener("click", () => {
-    console.log("teste")
-    window.location.href = "/tabela"
-})
+    const botaoCriarconta = document.getElementById("btn-criarconta");
 
-const botaoMov = document.getElementById("Movimentar")
+    if (botaoCriarconta) {
+        botaoCriarconta.addEventListener("click", () => {
+            window.location.href = "/criarconta";
+        });
+    }
+
+    const botaoEntrar = document.getElementById("btn-entrar");
+
+    if (botaoEntrar) {
+        botaoEntrar.addEventListener("click", () => {
+            window.location.href = "/tabela";
+        });
+    }
+
+    const botaoCriar = document.getElementById("btn-criar");
+
+    if (botaoCriar) {
+        botaoCriar.addEventListener("click", () => {
+            window.location.href = "/tabela";
+        });
+    }
+
+});

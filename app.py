@@ -7,6 +7,10 @@ app = Flask(__name__)
 def home():
     return render_template('index.html')
 
+@app.route("/criarconta")
+def criarconta():
+    return render_template("criarconta.html")
+
 @app.route('/tabela')
 def tabela():
     conexao = mysql.connector.connect(
