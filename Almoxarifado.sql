@@ -17,4 +17,3 @@ INSERT INTO estoque (nome, qtde, imagem)
 VALUES ("Alicate", 8, "/static/alicate.jpg");
 
 TRUNCATE TABLE estoque;
-
