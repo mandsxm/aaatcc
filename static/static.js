@@ -1,30 +1,18 @@
-document.addEventListener("DOMContentLoaded", () => {
+// MUDAR PARA PÁGINA TABELA
+const botao = document.getElementById("btn-entrar");
 
-    // BOTÃO "ENTRAR"
-    const botao = document.getElementById("Entrar");
-    if (botao) {
-        botao.addEventListener("click", () => {
-            window.location.href = "/tabela";
-        });
-    }
+if (botao) {
+    botao.addEventListener("click", () => {
+        console.log("teste");
+        window.location.href = "/tabela";
+    });
+}
 
-    // BOTÃO "CRIAR UMA CONTA"
-    const botaoCriarconta = document.getElementById("btn-criarconta");
-    if (botaoCriarconta) {
-        botaoCriarconta.addEventListener("click", () => {
-            window.location.href = "/criarconta";
-        });
-    }
+// ADICIONAR E RETIRAR ITENS
+window.addEventListener("DOMContentLoaded", () => {
 
-    // BOTÃO "CRIAR CONTA"
-    const botaoCriar = document.getElementById("btn-criar");
-    if (botaoCriar) {
-        botaoCriar.addEventListener("click", () => {
-            window.location.href = "/tabela";
-        });
-    }
+    console.log("JS carregou com sucesso");
 
-    // MOVIMENTAÇÃO
     const btnEntrada = document.getElementById("btnEntrada");
     const btnSaida = document.getElementById("btnSaida");
     const btnRegistrar = document.getElementById("btnRegistrar");
@@ -32,58 +20,88 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let tipoMovimentacao = "";
 
+    // FUNÇÃO: limpar seleção
     function limparSelecao() {
         if (btnEntrada) btnEntrada.classList.remove("btn-selecionado");
         if (btnSaida) btnSaida.classList.remove("btn-selecionado");
     }
 
+    // BOTÃO ENTRADA
     if (btnEntrada) {
         btnEntrada.addEventListener("click", () => {
             tipoMovimentacao = "entrada";
+
             limparSelecao();
             btnEntrada.classList.add("btn-selecionado");
+
+            console.log("Entrada selecionada");
         });
     }
 
+    // BOTÃO SAÍDA
     if (btnSaida) {
         btnSaida.addEventListener("click", () => {
             tipoMovimentacao = "saida";
+
             limparSelecao();
             btnSaida.classList.add("btn-selecionado");
+
+            console.log("Saída selecionada");
         });
     }
 
-    window.excluirItem = async function(id) {
-        if (!confirm("Tem certeza que deseja excluir este item?")) return;
 
-        const resposta = await fetch(`/excluir/${id}`, { method: "DELETE" });
-        const data = await resposta.json();
+// EXCLUIR LINHA
+window.excluirItem = async function(id) {
 
-        if (data.success) {
-            alert("Item excluído com sucesso!");
-            location.reload();
-        } else {
-            alert("Erro ao excluir");
-        }
+    const confirmacao = confirm("Tem certeza que deseja excluir este item?");
+    if (!confirmacao) return;
+
+    const resposta = await fetch(`/excluir/${id}`, {
+        method: "DELETE"
+    });
+
+    const data = await resposta.json();
+
+    if (data.success) {
+        alert("Item excluído com sucesso!");
+        location.reload();
+    } else {
+        alert("Erro ao excluir");
     }
+}
 
+// ATUALIZAR A TABELA
     if (btnRegistrar) {
         btnRegistrar.addEventListener("click", async () => {
+
             if (tipoMovimentacao === "") {
                 alert("Selecione Entrada ou Saída.");
                 return;
             }
 
+            const item = document.getElementById("item").value;
+            const quantidade = document.getElementById("quantidade").value;
+            const responsavel = document.getElementById("responsavel").value;
+            const imagem = document.getElementById("fileInput").files[0];
+
             const formData = new FormData();
-            formData.append("nome", document.getElementById("item").value);
-            formData.append("qtde", document.getElementById("quantidade").value);
-            formData.append("responsavel", document.getElementById("responsavel").value);
+
+            formData.append("nome", item);
+            formData.append("qtde", quantidade);
+            formData.append("responsavel", responsavel);
+
+            if (imagem) {
+                formData.append("imagem", imagem);
+            }
+
             formData.append("tipo", tipoMovimentacao);
 
-            const imagem = document.getElementById("fileInput").files[0];
-            if (imagem) formData.append("imagem", imagem);
+            const resposta = await fetch("/entrada", {
+                method: "POST",
+                body: formData
+            });
 
-            const resposta = await fetch("/entrada", { method: "POST", body: formData });
             const data = await resposta.json();
 
             if (data.success) {

@@ -24,6 +24,12 @@
         <div class="menu-topbar">
             <a href="/tabela" class="menu-item">HOME</a>
             <a href="/editar" class="menu-item">EDITAR</a>
+
+        {% if session['tipo'] == 'admin' %}
+            <a href="/perfiladmin" class="menu-item">CONTAS</a>
+            <a href="/cadastro" class="menu-item">CADASTRO</a>
+        {% endif %}
+        
         </div>
     
         <div id="perfil">

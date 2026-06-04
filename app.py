@@ -16,31 +16,81 @@ def conectar():
         database='almoxarifado'
     )
 
-# MUDAR ROTA DA PÁGINA
+# PÁGINA INICIAL DE LOGIN
+app.secret_key = "chave_secreta_123"
+
+# FUNÇÕES DE AUTORIZAÇÃO
+def login_required():
+    return 'usuario' in session
+
+
+def admin_required():
+    return session.get('tipo') == 'admin'
+
+# =========================
+# LOGIN / HOME
+# =========================
+
 @app.route('/')
 def home():
     return render_template('index.html')
 
-# ENTRADA E SAÍDA
+# =========================
+# ROTAS (ADMIN + USUÁRIO)
+# =========================
+
 @app.route('/tabela')
 def tabela():
+    if not login_required():
+        return redirect('/')
+
     conexao = mysql.connector.connect(
-        host= 'localhost',
-        port = 3306,    
-        user = 'root',
-        password = '',
-        database = 'almoxarifado'
+        host='localhost',
+        port=3306,
+        user='root',
+        password='',
+        database='almoxarifado'
     )
+
     cursor = conexao.cursor()
     cursor.execute("SELECT * FROM estoque")
-
     resultado = cursor.fetchall()
+
+    cursor.close()
+    conexao.close()
 
     return render_template('tabela.html', resultado=resultado)
 
+
 @app.route('/editar')
-def movimentar():
+def editar():
+    if not login_required():
+        return redirect('/')
+
     return render_template('editar.html')
+
+# =========================
+# ROTAS (SOMENTE ADMIN)
+# =========================
+@app.route('/cadastro')
+def cadastro():
+    if not login_required():
+        return redirect('/')
+
+    if not admin_required():
+        return "Acesso negado (somente admin)"
+
+    return render_template('cadastro.html')
+
+@app.route('/perfiladmin')
+def perfiladmin():
+    if not login_required():
+        return redirect('/')
+
+    if not admin_required():
+        return "Acesso negado (somente admin)"
+
+    return render_template('perfiladmin.html')
 
 @app.route('/entrada', methods=['POST'])
 def entrada():
@@ -61,9 +111,8 @@ def entrada():
 
     cursor = conexao.cursor()
 
-    # =========================
-    # 1. SALVAR IMAGEM PRIMEIRO
-    # =========================
+ # SALVAR IMAGEM 
+
     if imagem:
         nome_arquivo = secure_filename(imagem.filename)
 
@@ -77,9 +126,8 @@ def entrada():
     else:
         caminho_imagem = None
 
-    # =========================
-    # 2. ENTRADA
-    # =========================
+# ENTRADA  E SAÍDA DE NOVOS VALORES
+
     if tipo == "entrada":
 
         sql = """
@@ -89,9 +137,6 @@ def entrada():
 
         cursor.execute(sql, (responsavel, nome, qtde, caminho_imagem))
 
-    # =========================
-    # 3. SAÍDA
-    # =========================
     elif tipo == "saida":
 
         sql = """
@@ -116,7 +161,7 @@ def excluir(id):
         host='localhost',
         port=3306,
         user='root',
-        password= '',
+        password='',
         database='almoxarifado'
     )
 
@@ -142,33 +187,35 @@ def login():
 
     conexao = conectar()
     cursor = conexao.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM usuarios WHERE email = %s", (email,))
+
+    cursor.execute(
+        "SELECT * FROM usuarios WHERE email = %s",
+        (email,)
+    )
+
     usuario = cursor.fetchone()
+
     cursor.close()
     conexao.close()
 
     if not usuario:
-        return jsonify({"success": False, "mensagem": "E-mail não encontrado."})
+        return "E-mail não encontrado."
 
     if not check_password_hash(usuario['senha'], senha):
-        return jsonify({"success": False, "mensagem": "Senha incorreta."})
+        return "Senha incorreta."
 
     session['usuario_id'] = usuario['id']
-    session['user']       = usuario['user']
-    session['perfil']     = usuario['perfil']
+    session['usuario']    = usuario['user']
+    session['tipo']       = usuario['perfil']
 
-    return jsonify({"success": True})
+    return redirect('/tabela')
 
 @app.route('/logout')
 def logout():
     session.clear()
     return redirect(url_for('home'))
 
-    # CADASTRO
-
-@app.route('/cadastro')
-def cadastro():
-    return render_template('cadastro.html')
+# CADASTRO
 
 @app.route('/cadastro', methods=['POST'])
 def cadastro_post():
@@ -192,8 +239,6 @@ def cadastro_post():
         return jsonify({"success": True})
     except mysql.connector.IntegrityError:
         return jsonify({"success": False, "mensagem": "E-mail já cadastrado."})
-
-
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0", port=5000)
