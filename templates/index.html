@@ -18,17 +18,19 @@
                 <div id="fiep-img">
                     <img src="static/fiep.png" alt="fiep-img">
                 </div>
+                <form action="/login" method="POST">
                 <div class="mb-3">
                     <label>Usuário</label>
-                    <input type="text" class="form-control" id="usuario" placeholder="Digite seu email">
+                    <input type="text" class="form-control" id="usuario" name="email" placeholder="Digite seu email">
                 </div>
                 <div class="mb-3">
                     <label>Senha</label>
-                    <input type="password" class="form-control" id="senha" placeholder="Digite sua senha">
+                    <input type="password" class="form-control" id="senha" name="senha" placeholder="Digite sua senha">
                 </div>
                 <div>
-                    <button id="btn-entrar" type="button" class="btn btn-primary">Entrar</button>
+                    <button id="btn-entrar" type="submit" class="btn btn-primary">Entrar</button>
                 </div>
+                </form>
                 <div>
                     <a id="btn-criarconta" href="/criarconta">Criar uma conta</a>
                 </div>
