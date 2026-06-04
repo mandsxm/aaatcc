@@ -116,7 +116,7 @@ def excluir(id):
         host='localhost',
         port=3306,
         user='root',
-        password='',
+        password= '',
         database='almoxarifado'
     )
 
@@ -133,7 +133,6 @@ def excluir(id):
     conexao.close()
 
     return jsonify({"success": True})
-
 
 # LOGIN E LOGOUT + CADASTRO
 @app.route('/login', methods=['POST'])
@@ -155,7 +154,7 @@ def login():
         return jsonify({"success": False, "mensagem": "Senha incorreta."})
 
     session['usuario_id'] = usuario['id']
-    session['nome']       = usuario['nome']
+    session['user']       = usuario['user']
     session['perfil']     = usuario['perfil']
 
     return jsonify({"success": True})
@@ -165,13 +164,15 @@ def logout():
     session.clear()
     return redirect(url_for('home'))
 
+    # CADASTRO
+
 @app.route('/cadastro')
 def cadastro():
     return render_template('cadastro.html')
 
 @app.route('/cadastro', methods=['POST'])
 def cadastro_post():
-    nome   = request.form.get('nome')
+    usuario   = request.form.get('user')
     email  = request.form.get('email')
     senha  = request.form.get('senha')
     perfil = request.form.get('perfil', 'usuario')
@@ -182,8 +183,8 @@ def cadastro_post():
         conexao = conectar()
         cursor = conexao.cursor()
         cursor.execute(
-            "INSERT INTO usuarios (nome, email, senha, perfil) VALUES (%s, %s, %s, %s)",
-            (nome, email, senha_hash, perfil)
+            "INSERT INTO usuarios (user, email, senha, perfil) VALUES (%s, %s, %s, %s)",
+            (usuario, email, senha_hash, perfil)
         )
         conexao.commit()
         cursor.close()

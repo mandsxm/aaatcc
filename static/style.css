@@ -1,15 +1,49 @@
 /* CONFIGURAÇÕES PARA TELA DE LOGIN */
+
 body {
   margin: 0;
   background-color:#F0F1F2;
   font-family: sans-serif;
 }
 
-#login-body{
-  background-color:#1D3273
+#login-body, #cadastro-body{
+  background-color:#1D3273;
+  overflow: hidden;
+  font-family: sans-serif
 }
 
-#login-page{
+#titulo-login{
+  margin-top: 0px;
+  margin-bottom: 25px;
+  font-family: sans-serif;
+}
+
+#titulo-login h2{
+  margin-top: 0px;
+  font-size: 1rem;
+  font-weight: 300;
+  letter-spacing: 4px;
+  margin-bottom: 8px;
+  color: #F0F1F2;
+}
+
+#titulo-login h1, #titulo-cadastro h1{
+  margin-top: 0px;
+  font-size: 2.7rem;
+  font-weight: bold;
+  color: #F0F1F2;
+  margin: 0;
+  letter-spacing: 1px;
+  text-shadow: 2px 2px 12px rgba(0,0,0,0.25);
+}
+
+#titulo-cadastro{
+  margin-top: 0px;
+  margin-bottom: 25px;
+  font-family: sans-serif;
+}
+
+#login-page, #cadastro-page{
   display: flex;
   height: 100vh;
 }
@@ -34,26 +68,26 @@ body {
   height: auto
 }
 
-#login-form{
+#login-form, #cadastro-form{
   width: 50%;
 
   display: flex;
   flex-direction: column;
   justify-content: center;
 
-  padding: 60px; 
+  padding: 10px 60px; 
   max-width: 440px;
   margin: auto;
 }
 
-#login-card{
+#login-card, #cadastro-card{
   padding: 30px;
   background-color:#F0F1F2;
   border-radius: 15px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.1);
 }
 
-#btn-entrar{
+#btn-entrar, #btn-criar{
   width: 75%;
   display: block;
   margin-top: 10px;
@@ -69,117 +103,110 @@ body {
   margin-right: auto;
 }
 
-#btn-criar{
-  width: 75%;
-  display: block;
-  margin-top: 10px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 /* CONFIGURAÇÕES PARA TELA HOME */
 
-body {
-  background-color: #F0F1F2;
-}
-
 .menu-topbar {
-  display: flex;
-  gap: 15px;
-  margin-top: 10px;
-  position: absolute;
-  left: 48%;
-  transform: translateX(-50%);
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+    position: absolute;
+    left: 48%;
+    transform: translateX(-50%);
 }
 
 .menu-item {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  padding: 8px 12px;
-  border-radius: 6px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 8px 12px;
+    border-radius: 6px;
 }
 
 .menu-item:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
 #topbar {
-  background-color: #1D3273;
-  height: 100px;
-  width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 9999;
-  display: flex;
-  align-items: center;
+    background-color: #1D3273;
+    height: 100px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
 }
 
 #titulo{
-  margin-top: 145px;
-  text-align: center;
-  font-family: "Google Sans", sans-serif;
-  color: #1D3273;
+    margin-top: 145px;
+    text-align: center;
+    font-family: "Google Sans", sans-serif;
+    color: #1D3273;
 }
 
 .icon-camera {
-  font-size: 26px;
+    font-size: 26px;
 }
 
 .icon-menu {
-  font-size: 40px !important;
-  color: #F0F1F2;
-  position: absolute;
-  left: 25px;
-  top: 30px;
+    font-size: 40px !important;
+    color: #F0F1F2;
+    position: absolute;
+    left: 25px;
+    top: 30px;
 }
 
 #logo {
-  position: absolute;
-  top: 28px;
-  left: 10%;
-  transform: translateX(-50%);
-  z-index: 10000; 
+    position: absolute;
+    top: 28px;
+    left: 10%;
+    transform: translateX(-50%);
+    z-index: 10000; 
 }
 
 #logo img {
-  width: 145px;
-  height: auto;
-  display: block;
+    width: 145px;
+    height: auto;
+    display: block;
 }
 
 #perfil {
-  position: absolute;
-  top: -15px;
-  right: 75px;
-  z-index: 10000; 
+    position: absolute;
+    top: -15px;
+    right: 75px;
+    z-index: 10000; 
 }
 
 #perfil img {
-  width: 135px;
-  height: auto;
+    width: 135px;
+    height: auto;
 }
 
 .menu-topbar {
-  display: flex;
-  gap: 20px;
-  margin-left: 40px;
+    display: flex;
+    gap: 20px;
+    margin-left: 40px;
 }
 
 .table-container {
-  display: flex;
-  justify-content: center;
-  margin: 120px auto;
+    display: flex;
+    justify-content: center;
+    margin: 120px auto;
+    margin-top:100px;
+}
+
+body::-webkit-scrollbar {
+    display: none; /* Chrome, Edge e Safari */
 }
 
 .tabela-estoque {
-  width: 60%;
-  border: 2px solid #F28705;
-  border-radius: 12px;
-  overflow: hidden;
-  border-collapse: separate;
-  border-spacing: 0;
+    width: 60%;
+    border: 2px solid #F28705;
+    border-radius: 12px;
+    overflow: hidden;
+    border-collapse: separate;
+    border-spacing: 0;
 }
 
 .tabela-estoque th,
@@ -193,6 +220,11 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body {
+  background-color: #F0F1F2;
+  font-family: "Google Sans", sans-serif;
 }
 
 #logo {
