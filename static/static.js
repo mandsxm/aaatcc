@@ -1,5 +1,5 @@
 // MUDAR PARA PÁGINA TABELA
-const botao = document.getElementById("Entrar");
+const botao = document.getElementById("btn-entrar");
 
 if (botao) {
     botao.addEventListener("click", () => {

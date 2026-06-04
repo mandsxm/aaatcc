@@ -1,35 +1,119 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect, session
 import mysql.connector
 import os
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 
-# MUDAR ROTA DA PÁGINA
+# PÁGINA INICIAL DE LOGIN
+app.secret_key = "chave_secreta_123"
+
+# FUNÇÕES DE AUTORIZAÇÃO
+def login_required():
+    return 'usuario' in session
+
+
+def admin_required():
+    return session.get('tipo') == 'admin'
+
+
+# =========================
+# LOGIN / HOME
+# =========================
 @app.route('/')
 def home():
     return render_template('index.html')
 
-# ENTRADA E SAÍDA
+
+@app.route('/login', methods=['POST'])
+def login():
+    email = request.form.get('email')
+    senha = request.form.get('senha')
+
+    conexao = mysql.connector.connect(
+        host='localhost',
+        port=3306,
+        user='root',
+        password='Mica@2009',
+        database='almoxarifado'
+    )
+
+    cursor = conexao.cursor()
+
+    cursor.execute("""
+        SELECT * FROM usuarios
+        WHERE email = %s AND senha = %s
+    """, (email, senha))
+
+    user = cursor.fetchone()
+
+    cursor.close()
+    conexao.close()
+
+    if user:
+        session['usuario'] = user[1]   # nome
+        session['tipo'] = user[4]      # admin ou usuario
+        return redirect('/tabela')
+    else:
+        return "Email ou senha inválidos"
+
+
+# =========================
+# ROTAS (ADMIN + USUÁRIO)
+# =========================
 @app.route('/tabela')
 def tabela():
+    if not login_required():
+        return redirect('/')
+
     conexao = mysql.connector.connect(
-        host= 'localhost',
-        port = 3306,    
-        user = 'root',
-        password = '',
-        database = 'almoxarifado'
+        host='localhost',
+        port=3306,
+        user='root',
+        password='Mica@2009',
+        database='almoxarifado'
     )
+
     cursor = conexao.cursor()
     cursor.execute("SELECT * FROM estoque")
-
     resultado = cursor.fetchall()
+
+    cursor.close()
+    conexao.close()
 
     return render_template('tabela.html', resultado=resultado)
 
+
 @app.route('/editar')
-def movimentar():
+def editar():
+    if not login_required():
+        return redirect('/')
+
     return render_template('editar.html')
+
+
+# =========================
+# ROTAS (SOMENTE ADMIN)
+# =========================
+@app.route('/cadastro')
+def cadastro():
+    if not login_required():
+        return redirect('/')
+
+    if not admin_required():
+        return "Acesso negado (somente admin)"
+
+    return render_template('cadastro.html')
+
+@app.route('/perfiladmin')
+def perfiladmin():
+    if not login_required():
+        return redirect('/')
+
+    if not admin_required():
+        return "Acesso negado (somente admin)"
+
+    return render_template('perfiladmin.html')
 
 @app.route('/entrada', methods=['POST'])
 def entrada():
@@ -44,15 +128,14 @@ def entrada():
         host='localhost',
         port=3306,
         user='root',
-        password='',
+        password='Mica@2009',
         database='almoxarifado'
     )
 
     cursor = conexao.cursor()
 
-    # =========================
-    # 1. SALVAR IMAGEM PRIMEIRO
-    # =========================
+ # SALVAR IMAGEM 
+
     if imagem:
         nome_arquivo = secure_filename(imagem.filename)
 
@@ -66,9 +149,7 @@ def entrada():
     else:
         caminho_imagem = None
 
-    # =========================
-    # 2. ENTRADA
-    # =========================
+# ENTRADA  E SAÍDA DE NOVOS VALORES
     if tipo == "entrada":
 
         sql = """
@@ -76,11 +157,8 @@ def entrada():
         VALUES (%s, %s, %s, %s)
         """
 
-        cursor.execute(sql, (responsavel, nome, qtde,imagem))
+        cursor.execute(sql, (responsavel, nome, qtde, caminho_imagem))
 
-    # =========================
-    # 3. SAÍDA
-    # =========================
     elif tipo == "saida":
 
         sql = """
@@ -105,7 +183,7 @@ def excluir(id):
         host='localhost',
         port=3306,
         user='root',
-        password= '',
+        password='Mica@2009',
         database='almoxarifado'
     )
 
