@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='janela_icone.png') }}">
     <script src="{{ url_for('static', filename='static.js') }}"></script>
-    <title>SENAI - Início</title>
+    <title>SENAI - Acesso</title>
 </head>
 <body>
     
@@ -37,71 +37,40 @@
         </div>
     </div>
     
-    <h1 id="titulo">Bem-vindo(a) ao Almoxarifado!</h1>
+    <h1 id="titulo">Bem-vindo(a) ao Gerenciador de Contas!</h1>
 
 
     <div class="table-container">
     <table class="table table-bordered tabela-estoque">
+
         <tr>
             <th>ID</th>
-            <th>RESPONSÁVEL</th>
             <th>NOME</th>
-            <th>QUANTIDADE</th>
-            <th>IMAGEM</th>
+            <th>EMAIL</th>
+            <th>SENHA</th>
+            <th>TIPO</th>
             <th>EXCLUIR</th>
         </tr>
 
         {% for item in resultado %}
 
         <tr>
-            <td>{{item[0]}}</td>
-            <td>{{item[1]}}</td>
-            <td>{{item[2]}}</td>
-            <td>{{item[3]}}</td>
-
-            <td>
-                <button class="btn btn-primary btn-sm"
-                        data-bs-toggle="modal"
-                        data-bs-target="#modal{{item[0]}}">
-                    <span class="material-symbols-outlined">photo_camera</span>
-                </button>
-            </td>
+            <td>{{ item[0] }}</td>
+            <td>{{ item[1] }}</td>
+            <td>{{ item[2] }}</td>
+            <td>{{ item[3] }}</td>
+            <td>{{ item[4] }}</td>
 
             <td>
                 <button class="btn btn-danger btn-sm"
-                        onclick="excluirItem('{{ item[0] }}')">
-                    <span class="material-symbols-outlined">
-                        delete
-                    </span>
+                        onclick="excluirUsuario('{{ item[0] }}')">
+                    <span class="material-symbols-outlined">delete</span>
                 </button>
             </td>
         </tr>
 
         {% endfor %}
+
+
     </table>
 </div>
-
-{% for item in resultado %}
-<div class="modal fade" id="modal{{item[0]}}" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-
-            <div class="modal-header">
-                <h5 class="modal-title">{{item[2]}}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-
-            <div class="modal-body text-center">
-                <img src="{{item[4]}}" class="img-fluid" style="max-height:400px;">
-            </div>
-
-        </div>
-    </div>
-</div>
-
-{% endfor %}
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-</body>
-</html>
