@@ -135,7 +135,7 @@ def excluir(id):
     return jsonify({"success": True})
 
 
-# LOGIN E LOGOUT + CRIAR CONTA
+# LOGIN E LOGOUT + CADASTRO
 @app.route('/login', methods=['POST'])
 def login():
     email = request.form.get('email')
@@ -165,12 +165,12 @@ def logout():
     session.clear()
     return redirect(url_for('home'))
 
-@app.route('/criarconta')
-def criarconta():
-    return render_template('criarconta.html')
+@app.route('/cadastro')
+def cadastro():
+    return render_template('cadastro.html')
 
-@app.route('/criarconta', methods=['POST'])
-def criarconta_post():
+@app.route('/cadastro', methods=['POST'])
+def cadastro_post():
     nome   = request.form.get('nome')
     email  = request.form.get('email')
     senha  = request.form.get('senha')
