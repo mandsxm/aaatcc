@@ -165,6 +165,10 @@ def logout():
     session.clear()
     return redirect(url_for('home'))
 
+@app.route('/criarconta')
+def criarconta():
+    return render_template('criarconta.html')
+
 @app.route('/criarconta', methods=['POST'])
 def criarconta_post():
     nome   = request.form.get('nome')
