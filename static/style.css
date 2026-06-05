@@ -3,7 +3,7 @@
 body {
   margin: 0;
   background-color:#F0F1F2;
-  font-family: sans-serif;
+  font-family: "Google Sans", sans-serif;
 }
 
 #login-body{
@@ -109,10 +109,6 @@ body {
 
 /* CONFIGURAÇÕES PARA TELA HOME */
 
-body {
-  background-color: #F0F1F2;
-}
-
 .menu-topbar {
     display: flex;
     gap: 15px;
@@ -148,6 +144,7 @@ body {
 
 #titulo{
     margin-top: 145px;
+    margin-bottom: 50px;
     text-align: center;
     font-family: "Google Sans", sans-serif;
     color: #1D3273;
@@ -201,11 +198,11 @@ body {
     display: flex;
     justify-content: center;
     margin: 120px auto;
-    margin-top:100px;
+    margin-top: 50px;
 }
 
 body::-webkit-scrollbar {
-    display: none; /* Chrome, Edge e Safari */
+    display: none;
 }
 
 .tabela-estoque {
@@ -223,16 +220,55 @@ body::-webkit-scrollbar {
     padding: 10px;
 }
 
+/* TELA CADASTRO */
+
+#body-cadastro {
+  overflow: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+#body-cadastro::-webkit-scrollbar {
+  display: none;
+}
+
+#cadastro-card{
+  padding: 30px;
+  background-color:#F0F1F2;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+#titulo-cadastro{
+    margin-top: 145px;
+    margin-bottom: 42px;
+    text-align: center;
+    font-family: "Google Sans", sans-serif;
+    color: #1D3273;
+}
+
+#main-cadastro {
+  max-width: 700px;
+  margin: 0px auto 30px;
+  padding: 25px;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 2px solid #F28705;
+}
+
+#btn-criar {
+  width: 35%;
+  display: block;
+  margin-top: 16px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* TELA EDITAR */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-
-body {
-  background-color: #F0F1F2;
-  font-family: "Google Sans", sans-serif;
 }
 
 #logo {
@@ -256,14 +292,6 @@ body {
   object-fit: cover;
 }
 
-.icon-menu {
-  font-size: 40px !important;
-  color: #F0F1F2;
-  position: absolute;
-  left: 25px;
-  top: 30px;
-}
-
 #perfil {
   position: absolute;
   top: -15px;
@@ -276,9 +304,9 @@ body {
   height: auto;
 }
 
-main {
+#main-editar {
   max-width: 700px;
-  margin: 145px auto 30px;
+  margin: 20px auto 30px;
   padding: 25px;
   background: #ffffff;
   border-radius: 12px;

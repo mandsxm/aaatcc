@@ -3,45 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SENAI- Cadastro</title>
-    <link rel="stylesheet" href ="static/style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='janela_icone.png') }}">
+    <script src="{{ url_for('static', filename='static.js') }}"></script>
+    <title>SENAI - Cadastro de usuários</title>
 </head>
-<body id="cadastro-body">
-    <div id="cadastro-page">
-        <div id="login-img">
-            <img src="static/indust.png" alt="login-img">
-        </div>
-        <div id="cadastro-form">
-            <div id="titulo-cadastro">
-                <h1>CADASTRE-SE</h1>
+<body id="body-cadastro">
+    <header>
+        <div id="topbar">
+            <div id="logo">
+                <img src="/static/logo_sistema.png">
             </div>
-            <div id="cadastro-card">
-                <div id="fiep-img">
-                    <img src="static/fiep.png" alt="fiep-img">
-                </div>
-                <form action="/cadastro" method="POST" enctype="multipart/form-data">
-                    <div class="mb-3">
-                        <label>Usuário</label>
-                        <input type="text" class="form-control" id="usuario" name="user" placeholder="Nome de usuário" required minlength="3" title="Digite o nome de usuário.">
-                    </div>
-                    <div class="mb-3">
-                        <label>E-mail profissional</label>
-                        <input type="text" class="form-control" id="email" name="email" placeholder="seunome@pr.senai.br" required pattern=".+@pr\.senai\.br" title="Digite o seu email profissional.">
-                    </div>
-                    <div class="mb-3">
-                        <label>Senha</label>
-                        <input type="password" class="form-control" id="senha" name="senha" placeholder="Digite sua senha" required minlength="6" title="A senha precisa ter no mínimo 6 caracteres">
-                    </div>
-                    <div>
-                        <button id="btn-criar" type="submit" class="btn btn-primary">Cadastrar-se</button>
-                    </div>
-                    <input type="hidden" name="perfil" value="admin">
-                </form>
-            </div>
+        
+            <div class="menu-topbar">
+                <a href="/tabela" class="menu-item">MATERIAIS</a>
+                <a href="/editar" class="menu-item">EDITAR</a>
+
+            {% if session['tipo'] == 'admin' %}
+                <a href="/acesso" class="menu-item">CONTAS</a>
+                <a href="/cadastro" class="menu-item">CADASTRO</a>
+            {% endif %}
+
+            </div>            
         </div>
-    </div>
+    </header>
+
+    <h1 id="titulo-cadastro">Boas-vindas ao Cadastro de Usuários!</h1>
+
+    <main id="main-cadastro">
+        <form id="cadastro-form" action="/cadastro" method="POST" enctype="multipart/form-data">
+
+            <label class="secao-label" style="margin-top: 16px;">Usuário</label>
+            <input style="width: 100%;" type="text" id="usuario" name="user" placeholder="Nome de Usuário" required minlength="3" title="Digite o nome de usuário."/>
+
+            <label class="secao-label" style="margin-top: 16px;">E-mail profissional</label>
+            <input style="width: 100%;" type="text" id="email" name="email" placeholder="seunome@empresa.com" required pattern=".+@empresa\.com" title="Digite o seu e-mail profissional."/>
+
+            <label class="secao-label" style="margin-top: 16px;">Senha</label>
+            <input style="width: 100%;" type="password" id="senha" name="senha" placeholder="Digite a senha..." required minlength="3" title="A senha precisa ter no mínimo 6 caracteres."/>
+
+            <div>
+                <button id="btn-criar" type="submit" class="btn btn-primary">Cadastrar-se</button>
+            </div>
+            <input type="hidden" name="perfil" value="admin">
+        </form>
+    </main>
 
     <script src="/static/static.js"></script>
 </body>
