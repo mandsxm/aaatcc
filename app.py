@@ -2,7 +2,6 @@ from flask import Flask, render_template, request, jsonify, session, redirect, u
 import mysql.connector
 import os
 from werkzeug.utils import secure_filename
-from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.secret_key = 'almoxarifado_secret_key'
@@ -12,12 +11,9 @@ def conectar():
         host='localhost',
         port=3306,
         user='root',
-        password='',
+        password='m4nds@mySQL_',
         database='almoxarifado'
     )
-
-# PÁGINA INICIAL DE LOGIN
-app.secret_key = "chave_secreta_123"
 
 # FUNÇÕES DE AUTORIZAÇÃO
 def login_required():
@@ -35,39 +31,6 @@ def admin_required():
 def home():
     return render_template('index.html')
 
-# Rota de como o usurário e o admin vão logar
-@app.route('/login', methods=['POST'])
-def login():
-    email = request.form.get('email')
-    senha = request.form.get('senha')
-
-    conexao = mysql.connector.connect(
-        host='localhost',
-        port=3306,
-        user='root',
-        password='Mica@2009',
-        database='almoxarifado'
-    )
-
-    cursor = conexao.cursor()
-
-    cursor.execute("""
-        SELECT * FROM usuarios
-        WHERE email = %s AND senha = %s
-    """, (email, senha))
-
-    user = cursor.fetchone()
-
-    cursor.close()
-    conexao.close()
-
-    if user:
-        session['usuario'] = user[1]   
-        session['tipo'] = user[4]      
-        return redirect('/tabela')
-    else:
-        return "Email ou senha inválidos"
-
 # ROTAS ADMIN + USUÁRIO
 
 # Tabela.html: Página para visualizar estoque
@@ -81,7 +44,7 @@ def tabela():
         host='localhost',
         port=3306,
         user='root',
-        password='Mica@2009',
+        password='m4nds@mySQL_',
         database='almoxarifado'
     )
 
@@ -117,7 +80,7 @@ def acesso():
         host='localhost',
         port=3306,
         user='root',
-        password='Mica@2009',
+        password='m4nds@mySQL_',
         database='almoxarifado'
     )
 
@@ -139,7 +102,7 @@ def excluir_usuario(id):
         host='localhost',
         port=3306,
         user='root',
-        password='Mica@2009',
+        password='m4nds@mySQL_',
         database='almoxarifado'
     )
 
@@ -181,7 +144,7 @@ def entrada():
         host='localhost',
         port=3306,
         user='root',
-        password='Mica@2009',
+        password='m4nds@mySQL_',
         database='almoxarifado'
     )
 
@@ -237,7 +200,7 @@ def excluir(id):
         host='localhost',
         port=3306,
         user='root',
-        password='Mica@2009',
+        password='m4nds@mySQL_',
         database='almoxarifado'
     )
 
@@ -263,22 +226,13 @@ def login():
 
     conexao = conectar()
     cursor = conexao.cursor(dictionary=True)
-
-    cursor.execute(
-        "SELECT * FROM usuarios WHERE email = %s",
-        (email,)
-    )
-
+    cursor.execute("SELECT * FROM usuarios WHERE email = %s AND senha = %s", (email, senha))
     usuario = cursor.fetchone()
-
     cursor.close()
     conexao.close()
 
     if not usuario:
-        return "E-mail não encontrado."
-
-    if not check_password_hash(usuario['senha'], senha):
-        return "Senha incorreta."
+        return "Email ou senha inválidos"
 
     session['usuario_id'] = usuario['id']
     session['usuario']    = usuario['user']
@@ -286,28 +240,26 @@ def login():
 
     return redirect('/tabela')
 
+# LOGOUT
 @app.route('/logout')
 def logout():
     session.clear()
     return redirect(url_for('home'))
 
 # CADASTRO
-
 @app.route('/cadastro', methods=['POST'])
 def cadastro_post():
-    usuario   = request.form.get('user')
-    email  = request.form.get('email')
-    senha  = request.form.get('senha')
-    perfil = request.form.get('perfil', 'usuario')
-
-    senha_hash = generate_password_hash(senha)
+    usuario = request.form.get('user')
+    email   = request.form.get('email')
+    senha   = request.form.get('senha')
+    perfil  = request.form.get('perfil', 'usuario')
 
     try:
         conexao = conectar()
         cursor = conexao.cursor()
         cursor.execute(
             "INSERT INTO usuarios (user, email, senha, perfil) VALUES (%s, %s, %s, %s)",
-            (usuario, email, senha_hash, perfil)
+            (usuario, email, senha, perfil)
         )
         conexao.commit()
         cursor.close()

@@ -12,10 +12,10 @@ CREATE TABLE estoque (
 
 CREATE TABLE usuarios (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(100) NOT NULL,
+    user VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     senha VARCHAR(255) NOT NULL,
-    tipo VARCHAR(20) NOT NULL DEFAULT 'usuario'
+    perfil VARCHAR(20) NOT NULL DEFAULT 'usuario'
 );
 
 INSERT INTO estoque (responsavel, nome, qtde, imagem)
@@ -23,9 +23,9 @@ VALUES ("Róger", "Chave Fenda", 12, "/static/chave_fenda.jpg");
 INSERT INTO estoque (responsavel, nome, qtde, imagem)
 VALUES ("Viviane", "Alicate", 8, "/static/alicate.jpg");
 
-INSERT INTO usuarios (nome, email, senha, tipo)
+INSERT INTO usuarios (user, email, senha, perfil)
 VALUES ('Administrador', 'admin@empresa.com', '123456', 'admin');
-INSERT INTO usuarios (nome, email, senha, tipo)
+INSERT INTO usuarios (user, email, senha, perfil)
 VALUES ('João', 'joao@empresa.com', '123456', 'usuario');
 
 SELECT * FROM estoque;
