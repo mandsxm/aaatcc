@@ -154,14 +154,6 @@ body {
     font-size: 26px;
 }
 
-.icon-menu {
-    font-size: 40px !important;
-    color: #F0F1F2;
-    position: absolute;
-    left: 25px;
-    top: 30px;
-}
-
 #logo {
     position: absolute;
     top: 28px;

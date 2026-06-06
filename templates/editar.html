@@ -25,7 +25,7 @@
                 <a href="/tabela" class="menu-item">MATERIAIS</a>
                 <a href="/editar" class="menu-item">EDITAR</a>
 
-                {% if session['tipo'] == 'admin' %}
+                {% if session.get('tipo') == 'admin' %}
                     <a href="/acesso" class="menu-item">CONTAS</a>
                     <a href="/cadastro" class="menu-item">CADASTRO</a>
                 {% endif %}
