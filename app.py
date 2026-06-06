@@ -236,6 +236,7 @@ def login():
 
     session['usuario_id'] = usuario['id']
     session['usuario']    = usuario['user']
+    session['email']      = usuario['email']
     session['tipo']       = usuario['perfil']
 
     return redirect('/tabela')

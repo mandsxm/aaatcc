@@ -220,6 +220,11 @@ body::-webkit-scrollbar {
     padding: 10px;
 }
 
+.dropdown-item.sair:hover {
+    background-color: #0f1e3d;
+    color: white;
+}
+
 /* TELA CADASTRO */
 
 #body-cadastro {
